@@ -1,0 +1,9 @@
+.env
+bin/
+tmp/
+*.pdf
+!testdata/*.pdf
+
+.DS_Store
+.idea/
+.vscode/

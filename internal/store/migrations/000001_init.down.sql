@@ -1,0 +1,6 @@
+DROP TABLE IF EXISTS questions;
+DROP TABLE IF EXISTS jobs;
+DROP TABLE IF EXISTS document_chunks;
+DROP TABLE IF EXISTS documents;
+DROP TYPE  IF EXISTS doc_status;
+DROP TABLE IF EXISTS users;
