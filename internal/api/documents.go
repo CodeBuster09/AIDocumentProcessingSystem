@@ -205,6 +205,7 @@ type documentDTO struct {
 }
 
 // toDTO converts a domain.Document to a documentDTO for API responses.
+// The conversion is explicit to avoid accidentally exposing internal fields.
 func toDTO(d *domain.Document) documentDTO {
 	return documentDTO{
 		ID:        d.ID.String(),
