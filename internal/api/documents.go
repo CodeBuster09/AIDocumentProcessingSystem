@@ -204,6 +204,7 @@ type documentDTO struct {
 	CreatedAt time.Time `json:"createdAt"`
 }
 
+// toDTO converts a domain.Document to a documentDTO for API responses.
 func toDTO(d *domain.Document) documentDTO {
 	return documentDTO{
 		ID:        d.ID.String(),
