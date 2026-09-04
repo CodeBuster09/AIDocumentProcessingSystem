@@ -13,9 +13,9 @@ import (
 )
 
 type Config struct {
-	Endpoint 	  string
-	AccessKey   string
-	SecretKey   string
+	Endpoint  string
+	AccessKey string
+	SecretKey string
 	Bucket    string
 	UseSSL    bool
 }
@@ -67,8 +67,7 @@ func (s *Store) ensureBucket(ctx context.Context) error {
 	return nil
 }
 
-
-func (s *Store) Put(ctx context.Context, key string, r io.Reader, size int64, contentType string) (error) {
+func (s *Store) Put(ctx context.Context, key string, r io.Reader, size int64, contentType string) error {
 	_, err := s.client.PutObject(ctx, s.bucket, key, r, size, minio.PutObjectOptions{
 		ContentType: contentType,
 	})
@@ -79,7 +78,7 @@ func (s *Store) Put(ctx context.Context, key string, r io.Reader, size int64, co
 }
 
 func (s *Store) Get(ctx context.Context, key string) (io.ReadCloser, error) {
-	obj, err := s.client.GetObject(ctx, s.bucket, key, minio.GetObjectOptions{});
+	obj, err := s.client.GetObject(ctx, s.bucket, key, minio.GetObjectOptions{})
 	if err != nil {
 		return nil, fmt.Errorf("get object: %w", err)
 	}
@@ -93,7 +92,6 @@ func (s *Store) Get(ctx context.Context, key string) (io.ReadCloser, error) {
 	return obj, nil
 }
 
-
 func (s *Store) Delete(ctx context.Context, key string) error {
 	if err := s.client.RemoveObject(ctx, s.bucket, key,
 		minio.RemoveObjectOptions{}); err != nil {
@@ -105,7 +103,6 @@ func (s *Store) Delete(ctx context.Context, key string) error {
 func Key(userID, documentID uuid.UUID) string {
 	return fmt.Sprintf("%s/%s.pdf", userID, documentID)
 }
-
 
 // PresignGet returns a short-lived URL the browser can fetch directly, so
 // the PDF bytes never pass through your API on download.

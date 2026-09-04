@@ -3,6 +3,9 @@ module docpipe
 go 1.25.6
 
 require (
+	github.com/anthropics/anthropic-sdk-go v1.70.1
+	github.com/go-chi/chi v1.5.5
+	github.com/go-chi/chi/v5 v5.3.2
 	github.com/google/uuid v1.6.0
 	github.com/jackc/pgx/v5 v5.10.0
 	github.com/minio/minio-go/v7 v7.3.0
