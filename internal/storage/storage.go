@@ -2,6 +2,7 @@ package storage
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"io"
 	"net/url"
@@ -11,6 +12,11 @@ import (
 	"github.com/minio/minio-go/v7"
 	"github.com/minio/minio-go/v7/pkg/credentials"
 )
+
+// ErrNotFound lets callers tell "this object is gone" apart from "the
+// object store is unreachable". The phase 3 worker needs that distinction:
+// a missing object is permanent and must not be retried five times.
+var ErrNotFound = errors.New("object not found")
 
 type Config struct {
 	Endpoint  string
@@ -85,7 +91,7 @@ func (s *Store) Get(ctx context.Context, key string) (io.ReadCloser, error) {
 	if _, err := obj.Stat(); err != nil {
 		obj.Close()
 		if minio.ToErrorResponse(err).Code == "NoSuchKey" {
-			return nil, fmt.Errorf("object %q not found: %w", key, err)
+			return nil, fmt.Errorf("%q: %w", key, ErrNotFound)
 		}
 		return nil, fmt.Errorf("stat %q: %w", key, err)
 	}

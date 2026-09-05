@@ -6,11 +6,11 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/anthropics/anthropic-sdk-go/config"
-	"github.com/go-chi/chi"
-	"github.com/go-chi/chi/middleware"
+	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/chi/v5/middleware"
 	"github.com/google/uuid"
 
+	"docpipe/internal/config"
 	"docpipe/internal/domain"
 )
 
@@ -28,8 +28,8 @@ type blobStore interface {
 }
 
 type server struct {
-	cfg config.Config
-	docs documentStore
+	cfg   config.Config
+	docs  documentStore
 	blobs blobStore
 }
 
@@ -40,7 +40,7 @@ func NewRouter(cfg config.Config, docs documentStore, blobs blobStore) http.Hand
 		blobs: blobs,
 	}
 
-	r := chi.NewRouter();
+	r := chi.NewRouter()
 	r.Use(middleware.RequestID)
 	r.Use(middleware.RealIP)
 	r.Use(requestLogger)
@@ -62,4 +62,4 @@ func NewRouter(cfg config.Config, docs documentStore, blobs blobStore) http.Hand
 	})
 
 	return r
-}	
+}
