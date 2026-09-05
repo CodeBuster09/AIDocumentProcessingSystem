@@ -297,7 +297,7 @@ Base path `/api/v1`. JSON in, JSON out. Bearer JWT except on auth routes.
 | POST | `/documents/{id}/questions` | 200 · 429 | **synchronous** |
 | GET | `/documents/{id}/questions` | 200 | history |
 | POST | `/documents/{id}/retry` | 202 | only from `FAILED` |
-| GET | `/healthz` | 200 | liveness |
+| GET | `/health` | 200 | liveness |
 
 ## 3.2 Upload — why 202
 

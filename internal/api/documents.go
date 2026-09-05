@@ -25,7 +25,7 @@ type uploadResponse struct {
 	StatusURL  string `json:"statusUrl"`
 }
 
-func (s *server) uploadDocument(w http.ResponseWriter, r *http.Request) {
+func (s *server) handleUploadDocument(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	uid := userID(ctx)
 
@@ -123,7 +123,7 @@ func (s *server) uploadDocument(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
-func (s *server) getDocument(w http.ResponseWriter, r *http.Request) {
+func (s *server) handleGetDocument(w http.ResponseWriter, r *http.Request) {
 	id, err := uuid.Parse(chi.URLParam(r, "id"))
 	if err != nil {
 		notFound(w) // a malformed id is indistinguishable from a missing one
@@ -142,7 +142,7 @@ func (s *server) getDocument(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, http.StatusOK, toDTO(doc))
 }
 
-func (s *server) listDocuments(w http.ResponseWriter, r *http.Request) {
+func (s *server) handleListDocuments(w http.ResponseWriter, r *http.Request) {
 	limit := 20
 	if v := r.URL.Query().Get("limit"); v != "" {
 		if n, err := strconv.Atoi(v); err == nil && n > 0 && n <= 100 {
@@ -167,7 +167,7 @@ func (s *server) listDocuments(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
-func (s *server) downloadDocument(w http.ResponseWriter, r *http.Request) {
+func (s *server) handleDownloadDocument(w http.ResponseWriter, r *http.Request) {
 	id, err := uuid.Parse(chi.URLParam(r, "id"))
 	if err != nil {
 		notFound(w)

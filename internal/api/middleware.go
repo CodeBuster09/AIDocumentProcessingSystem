@@ -23,13 +23,10 @@ func injectDevUser(devUserID uuid.UUID) func(http.Handler) http.Handler {
 	}
 }
 
-
 func userID(ctx context.Context) uuid.UUID {
 	id, _ := ctx.Value(userIDKey).(uuid.UUID)
 	return id
 }
-
-
 
 func requestLogger(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
